@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            background-image: url("mountains.jpg");
+            background-position: center;
+            background-size: cover;
+
+        }
+
+        .main {
+            height: 100vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            
+        }
+
+        .profile{
+            display: flex;
+            justify-content: center;
+        }
+
+        label,
+        input[type=submit] {
+            font-weight: 900;
+            color: #809388;
+        }
+
+        input,select{
+            margin: 10px 0;
+            width: 25vmax;
+            height: 5vmin;
+            font-size: 2.5vmin;
+            padding: 0 1vmin;
+            border-radius: 4px;
+            border: 1px solid black;
+            background-color: transparent;
+        }
+        input::placeholder{
+            color: whitesmoke;
+            font-size: medium;
+        }
+        input[type=submit]{
+            background-color: #1240B2 !important;
+            color: white;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        input{
+            border: none;
+            outline: none;
+            border-bottom: 2px solid #739c96;
+            background-color: transparent !important;
+            color: whitesmoke;
+        }
+        .ack{
+            display: flex;
+            justify-content: center;
+        }
+        #myform{
+            border: 0px solid black;
+            padding: 20px 60px;
+            box-shadow: 0px 0px 10px #1d3b3d;
+            border-radius: 10px;
+        }
+        h1{
+            text-align: center;
+            line-height: 80px;
+
+        }
+        select{
+            color: honeydew;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #739c96;
+            background-color: transparent !important;
+        }
+        select::placeholder{
+            color: wheat;
+        }
+        option{
+            background-color: black;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <div class="main">
+        <form action="/login" method="post" id="myform" class="animate__animated ">
+            <div class="profile">
+                <img src="assets/images/profile.png" alt="">
+            </div>
+            <div class="inputs">
+                <label for="email">Enter your email:</label><br>
+                <input type="email" name="Email" id="email" placeholder="Enter your email:" required>
+            </div>
+            <div class="inputs">
+                <label for="name">Enter your Department:</label><br>
+                <input type="text" name="Department" id="Department" placeholder="Enter your Department:" required>
+            </div>
+            <div class="inputs">
+                <label for="person">Enter your role:</label><br>
+                <select name="Role" id="person" required>
+                    <option value="Student">Student</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="HOD">HOD</option>
+                </select>
+            </div>
+            <div class="inputs">
+                <label for="password">Enter your password:</label><br>
+                <input type="password" name="Password" id="password" placeholder="Enter your password:" required>
+            </div>
+            <% if (flag) { %>
+                <p class="error-message" id="error-message"> <%= message %> </p>
+                <input type="hidden" id="Flag" value="<%= flag %>">
+            <% } %>
+            <div class="input_btn">
+                <input type="submit" value="Login">
+            </div>
+            <div class="ack">
+                <a href="/forgot-password">Forgot Password?</a>
+            </div>
+            <div class="ack">
+                <a href="/signup">Don't have an account?</a>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        const emailInp = document.getElementById("email");
+        const deptInp = document.getElementById("Department");
+        const passInp = document.getElementById("password");
+        const errorMsg = document.getElementById("error-message");
+        errorMsg.style.color = 'red';
+        emailInp.addEventListener('input',function(){
+            errorMsg.style.display="none";
+        });
+        deptInp.addEventListener('input',function(){
+            errorMsg.style.display="none";
+        });
+        passInp.addEventListener('input',function(){
+            errorMsg.style.display="none";
+        });
+        const flag = document.getElementById("Flag");
+        if (flag){
+            function shake(){
+                const form = document.getElementById("myform");
+                form.classList.add("animate__shakeX");
+            }
+            shake();
+        }
+    </script>
+</body>
+</html>

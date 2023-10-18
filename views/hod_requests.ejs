@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD Requests</title>
+    <style>
+        body {
+            background-color: #f0f0f0fe;
+            margin: 0;
+            box-sizing: border-box;
+            background-image: url("mountains.jpg");
+            background-size: cover;
+        }
+
+        header {
+            background-color: #0077b6;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        #logout-button {
+            background-color: #f00;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn{
+            position: absolute;
+            bottom: 10%;
+        }
+        .fa-solid{
+            font-size: 25px;
+        }
+        #a,#b{
+            text-decoration: none;
+            color: white;
+        }
+        #log{
+            display: flex;
+            flex-direction: column;
+            line-height: 0px;
+        }
+        #log p{
+            font-weight: 600;
+        }
+        #one{
+            padding: 10px 20px;
+        }
+        td a{
+            color: lightblue;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        th, td ,tr{
+            padding: 10px;
+            border: 1px solid white !important;
+            color: whitesmoke;
+        }
+        th {
+            background-color: #0077b6;
+            color: #fff;
+        }
+        .table-row {
+            background-color: #fff;
+        }
+        .table-row:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        .table-row:hover {
+            background-color: #d2d2d2;
+        }
+        #res{
+            color: white;
+            padding: 10px;
+            margin: 0px 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        #logout-button{
+            border-radius: 2px;
+            padding: 10px;
+            background-color: #F47458;
+            box-sizing: border-box;
+            padding: 10px 20px;
+            text-decoration: none; 
+        }
+        #login-button{
+            padding: 15px 20px;
+            background-color: #F47458;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 2px;
+        }
+        #title{
+            font-weight: 600;
+            margin-left: 150px;
+        }
+        #ico{
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/72056d3ac9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div id="ico"> 
+            <a href="/hod-requests" id="a"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <p id="title"><b>"AcademEase: Student Permissions & Faculty Concerns"</b></p>    
+        <div id="log">
+            <% if(name){%>
+                <p>Welcome, <%= name %>!</p>
+                <a href="/logout" id="logout-button"><b>LOGOUT</b></a>
+            <%}else { %>
+                <a href="/login" id="login-button"><b>LOGIN</b></a>
+            <% } %>
+        </div>
+    </header>
+    <p id="res">HOD Requests</p>
+    <div id="one">
+        <table>
+            <tr>
+                <th>Regd-No</th>
+                <th>Reason</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>From Time</th>
+                <th>To Time</th>
+                <th>Documents</th>
+                <th>Status</th>
+                <th>Approve</th>
+                <th>Deny</th>
+            </tr>
+            <% requests.forEach(request => { %>
+                <tr>
+                    <td><%= request.regd_no %></td>
+                    <td><%= request.reason %></td>
+                    <% if (request.from_date === request.to_date) { %>
+                        <td><%= request.to_date %></td>
+                        <td><%= request.to_date %></td></td>
+                        <td><%= request.from_time %></td>
+                        <td><%= request.to_time %></td>
+                    <% } else { %>
+                        <td><%= request.from_date %></td>
+                        <td><%= request.to_date %></td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    <% } %>
+                    <td><% if (request.imgPath) { %>
+                        <a href="<%= request.imgPath %>" target="_blank">View Document</a></td>
+                    <% } else { %>
+                        <td>No document attached</td>
+                    <% } %>
+                    <td><%= request.status %></td>
+                    <form action="/hod-requests/approve" method="post">
+                        <input type="hidden" name="requestId" value="<%= request.id %>">
+                        <input type="hidden" name="regd_no" value="<%= request.regd_no %>">
+                        <td><button type="submit" name="action" value="approve"><i class="fa-solid fa-check" style="color: #00ff00;"></i></button></td>
+                        <td><button type="submit" name="action" value="deny"><i class="fa-solid fa-xmark" style="color: #ff0000;"></i></button></td>
+                    </form>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+</body>
+</html>

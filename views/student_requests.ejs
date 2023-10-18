@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Requests</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #ccc; /* Add a border to the table */
+        }
+
+        th, td {
+            border: 1px solid white !important;
+            padding: 10px;
+            color: white; /* Text color for table cells */
+        }
+
+        td a{
+            color: white;
+        }
+
+        th {
+            background-color: #0077b6; /*Background color for table header cells */
+            color: #fff; /* Text color for table header cells */
+        }
+        #mainer{
+            margin: 10px 10vh;
+        }
+        #res{
+            color: white;
+            text-align: center;
+            margin: 10px 10px 0px 10px;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+    <%- include('header',{name:name}); -%>
+    <p id="res">Your Requests</p>
+    <div id="mainer">
+        <table>
+            <tr>
+                <th>Reason</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>From Time</th>
+                <th>To Time</th>
+                <th>Document</th>
+                <th>Status</th>
+            </tr>
+                <% requests.forEach(request => { %>
+                    <tr>
+                        <div class="request-details">
+                            <!-- <h3 class="request-title">Request ID: <%= request.id %></h3> -->
+                            <!-- <td><p class="request-description"><%= request.regd_no %></p></td> -->
+                            <td><p class="request-description"><%= request.reason %></p></td>
+                            <td><p class="request-description"><%= request.from_date %></p></td>
+                            <td><p class="request-description"><%= request.to_date %></p></td>
+                            <% if (request.from_date === request.to_date) { %>
+                                <td><p class="request-description"><%= request.from_time %></p></td>
+                                <td><p class="request-description"><%= request.to_time %></p></td>
+                            <% } else { %>
+                                <td><p>NA</p></td>
+                                <td><p>NA</p></td>
+                            <% } %>
+                            <p class="request-description"><% if (request.imgPath) { %>
+                                <td><a href="<%= request.imgPath %>" target="_blank">View Document</a></td>
+                            <% } else { %>
+                                <td>No document attached</td>
+                            <% } %></p>
+                            <td><p class="request-description"><%= request.status %></p></td>
+                        </div>
+                    </tr>
+                <% }); %>
+        </table>
+    </div>
+</body>
+</html>

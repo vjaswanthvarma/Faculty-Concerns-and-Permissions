@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Permission Request Form</title>
+  <style>
+    #requestForm {
+        background: transparent;
+        max-width: 500px;
+        max-height: 500px;
+        overflow: auto;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+        font-weight: bold;
+        color: whitesmoke;
+        margin-top: 10px;
+    }
+
+    textarea::placeholder{
+        color: white transparent;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="file"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: white;
+    }
+
+    .sbtn{
+        display: flex;
+        justify-content: center;
+    }
+
+    button[type="submit"] {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    textarea,input{
+        background: transparent;
+    }
+
+    #res{
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+    <%- include('header',{name:name}); -%>
+    <div class="p_letter">
+        <p id="res">Permission Request Form</p>
+        <form id="requestForm" method="post" action="/request-form-data-upload" enctype="multipart/form-data">
+            <label for="reason">Reason:</label><br>
+            <textarea name="reason" id="reason" cols="30" rows="4" placeholder="Enter the reason for your permission"></textarea><br>
+
+            <label for="date">From Date:</label>
+            <input type="date" id="from_date" name="from_date" required><br>
+
+            <label for="date">To Date:</label>
+            <input type="date" id="to_date" name="to_date"><br>
+
+            <!-- Conditionally show "from time" and "to time" inputs based on the date range -->
+            <div id="timeInputs">
+                <label for="time">From Time:</label>
+                <input type="time" id="from_time" name="from_time"><br>
+
+                <label for="time">To Time:</label>
+                <input type="time" id="to_time" name="to_time"><br>
+            </div>
+
+            <label for="documents">Supporting Documents:</label>
+            <input type="file" id="documents" name="documents"><br>
+            <div class="sbtn">
+                <button type="submit">Submit Request</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Function to toggle the visibility of time inputs based on date range
+        function toggleTimeInputs() {
+            const fromInput = document.getElementById('from_date');
+            const toInput = document.getElementById('to_date');
+            const timeInputs = document.getElementById('timeInputs');
+
+            const fromDate = new Date(fromInput.value);
+            const toDate = new Date(toInput.value);
+
+            const timeDifference = toDate - fromDate;
+
+            if (timeDifference > 0) {
+                timeInputs.style.display = 'none';
+            } else {
+                timeInputs.style.display = 'block';
+            }
+        }
+
+        const fromInput = document.getElementById('from_date');
+        const toInput = document.getElementById('to_date');
+
+        fromInput.addEventListener('change', toggleTimeInputs);
+        toInput.addEventListener('change', toggleTimeInputs);
+    </script>
+</body>
+</html>
